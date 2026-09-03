@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>Employee Dashboard</title>
+    </head>
+    <body>
+        <h2>Employee Dashboard</h2>
+        <div>
+            <ul>
+                <th>Employees</th>
+                <th>Salary Budget</th>
+                <th>Average Salary</th>
+            </ul>
+        </div>
+        <div>
+            <h4>Search Employee</h4>
+            <input type="text" name="employeeName" placeholder="Search by name or dept" />
+        </div>
+        <div>
+            <h4>Employee List</h4>
+            <table>
+                <th>
+                    <td>Name</td>
+                    <td>Department</td>
+                    <td>Salary</td>
+                    <td>Action</td>
+                </th>
+            </table>
+        </div>
+        <div>
+            <h4>Add Employee</h4>
+            <p>Name : </p>
+            <input type="text" name="newemployeename" placeholder="Enter name" />
+            <p>Dept : </p>
+            <select name="dept" id="dept">
+                <option value="IT">IT</option>
+                <option value="HR">HR</option>
+                <option value="Finance">Finance</option>
+            </select>
+            <p>Salary : </p>
+            <input type="text" name="newemployeesalary" placeholder="Enter Salary" />
+        </div>
+        <div>
+            <h4>Department Distribution</h4>
+            <ul>
+                <li>IT</li>
+                <li>HR</li>
+                <li>Finance</li>
+            </ul>
+        </div>
+    </body>
+</html>
