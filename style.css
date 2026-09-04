@@ -1,0 +1,371 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    font-family: Arial, sans-serif;
+
+    background-color: #f1f2f5;
+
+    color: #14213d;
+}
+
+
+/* Main container */
+
+.container {
+    width: 675px;
+    margin: 10px auto;
+}
+
+
+/* =========================
+   HEADER
+   ========================= */
+
+.header {
+    height: 58px;
+
+    background: linear-gradient(
+        90deg,
+        #5040e8,
+        #7933e8
+    );
+
+    border-radius: 9px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 15px;
+
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.header h2 {
+    margin: 0;
+
+    color: white;
+
+    font-size: 18px;
+}
+
+.user {
+    background-color: rgba(255, 255, 255, 0.2);
+
+    color: white;
+
+    border-radius: 20px;
+
+    padding: 7px 14px;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   DASHBOARD CARDS
+   ========================= */
+
+.dashboard {
+    display: flex;
+
+    gap: 11px;
+
+    margin-top: 15px;
+}
+
+.dashboard-card {
+    flex: 1;
+
+    height: 79px;
+
+    border-radius: 7px;
+
+    color: white;
+
+    text-align: center;
+
+    padding-top: 15px;
+}
+
+.employees-card {
+    background: linear-gradient(
+        135deg,
+        #367df0,
+        #2457d9
+    );
+}
+
+.salary-card {
+    background: linear-gradient(
+        135deg,
+        #12b77e,
+        #07835f
+    );
+}
+
+.average-card {
+    background: linear-gradient(
+        135deg,
+        #8856ed,
+        #7025dc
+    );
+}
+
+.card-title {
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+.card-value {
+    margin-top: 8px;
+
+    font-size: 22px;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   COMMON BOX
+   ========================= */
+
+.box {
+    background-color: white;
+
+    margin-top: 15px;
+
+    padding: 16px;
+
+    border-radius: 9px;
+
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.box h4 {
+    margin: 0 0 10px 0;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   SEARCH
+   ========================= */
+
+.search-box {
+    height: 84px;
+}
+
+.search-box input {
+    width: 100%;
+
+    height: 36px;
+
+    padding: 0 11px;
+
+    border: 1px solid #d9dde5;
+
+    border-radius: 6px;
+
+    outline: none;
+
+    font-size: 11px;
+}
+
+.search-box input:focus {
+    border-color: #6347e8;
+}
+
+
+/* =========================
+   TABLE
+   ========================= */
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: 11px;
+}
+
+thead {
+    background-color: #f7f8fa;
+}
+
+th {
+    text-align: left;
+
+    font-weight: normal;
+
+    color: #45546c;
+
+    padding: 10px 9px;
+
+    border-bottom: 1px solid #dce0e5;
+}
+
+td {
+    padding: 10px 9px;
+
+    border-bottom: 1px solid #dce0e5;
+}
+
+td:first-child {
+    font-weight: bold;
+}
+
+.delete-btn {
+    border: none;
+
+    background-color: #ffe0e0;
+
+    color: #e33b3b;
+
+    padding: 6px 10px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-size: 10px;
+}
+
+.delete-btn:hover {
+    background-color: #ffcaca;
+}
+
+
+/* =========================
+   ADD EMPLOYEE
+   ========================= */
+
+.add-employee {
+    padding-bottom: 15px;
+}
+
+.form-row {
+    display: flex;
+
+    align-items: center;
+
+    margin-bottom: 9px;
+}
+
+.form-row label {
+    width: 70px;
+
+    font-size: 11px;
+
+    color: #46556e;
+}
+
+.form-row input,
+.form-row select {
+    flex: 1;
+
+    height: 31px;
+
+    border: 1px solid #d9dde5;
+
+    border-radius: 5px;
+
+    padding: 0 9px;
+
+    outline: none;
+
+    font-size: 10px;
+
+    background-color: white;
+}
+
+.form-row input:focus,
+.form-row select:focus {
+    border-color: #6347e8;
+}
+
+.button-container {
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-top: 15px;
+}
+
+#addEmployee {
+    background-color: #5340e7;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 5px;
+
+    padding: 8px 13px;
+
+    font-size: 10px;
+
+    cursor: pointer;
+}
+
+#addEmployee:hover {
+    background-color: #432ed4;
+}
+
+
+/* =========================
+   DEPARTMENT DISTRIBUTION
+   ========================= */
+
+.department-box ul {
+    list-style: none;
+
+    padding: 0;
+
+    margin: 0;
+}
+
+.department-box li {
+    height: 31px;
+
+    background-color: #f8f9fb;
+
+    margin-bottom: 8px;
+
+    padding: 0 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-radius: 4px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+.department-box li:last-child {
+    margin-bottom: 0;
+}
+
+.department-box .it {
+    border-left: 3px solid #3478f6;
+}
+
+.department-box .hr {
+    border-left: 3px solid #ed3d8f;
+}
+
+.department-box .finance {
+    border-left: 3px solid #11b981;
+}

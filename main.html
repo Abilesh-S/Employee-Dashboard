@@ -1,51 +1,200 @@
-<html>
-    <head>
-        <title>Employee Dashboard</title>
-    </head>
-    <body>
-        <h2>Employee Dashboard</h2>
-        <div>
-            <ul>
-                <th>Employees</th>
-                <th>Salary Budget</th>
-                <th>Average Salary</th>
-            </ul>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Header -->
+        <header class="header">
+            <h2>Employee Dashboard</h2>
+
+            
+        </header>
+
+
+        <!-- Dashboard Cards -->
+        <div class="dashboard">
+
+            <div class="dashboard-card employees-card">
+                <div class="card-title">👥 Employees</div>
+                <div class="card-value" id="employeeCount">3</div>
+            </div>
+
+            <div class="dashboard-card salary-card">
+                <div class="card-title">💰 Salary Budget</div>
+                <div class="card-value" id="salaryBudget">₹1,80,000</div>
+            </div>
+
+            <div class="dashboard-card average-card">
+                <div class="card-title">📈 Avg Salary</div>
+                <div class="card-value" id="averageSalary">₹60,000</div>
+            </div>
+
         </div>
-        <div>
-            <h4>Search Employee</h4>
-            <input type="text" name="employeeName" placeholder="Search by name or dept" />
-        </div>
-        <div>
+
+
+        <!-- Search Employee -->
+        <section class="box search-box">
+
+            <h4>Search Employee 🔍</h4>
+
+            <input
+                type="text"
+                id="searchEmployee"
+                placeholder="Search by name or department..."
+            >
+
+        </section>
+
+
+        <!-- Employee List -->
+        <section class="box">
+
             <h4>Employee List</h4>
+
             <table>
-                <th>
-                    <td>Name</td>
-                    <td>Department</td>
-                    <td>Salary</td>
-                    <td>Action</td>
-                </th>
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Salary</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="employeeTable">
+
+                    <tr>
+                        <td>John</td>
+                        <td>IT</td>
+                        <td>₹60,000</td>
+                        <td>
+                            <button class="delete-btn">Delete</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Sarah</td>
+                        <td>HR</td>
+                        <td>₹50,000</td>
+                        <td>
+                            <button class="delete-btn">Delete</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Mike</td>
+                        <td>Finance</td>
+                        <td>₹70,000</td>
+                        <td>
+                            <button class="delete-btn">Delete</button>
+                        </td>
+                    </tr>
+
+                </tbody>
+
             </table>
-        </div>
-        <div>
+
+        </section>
+
+
+        <!-- Add Employee -->
+        <section class="box add-employee">
+
             <h4>Add Employee</h4>
-            <p>Name : </p>
-            <input type="text" name="newemployeename" placeholder="Enter name" />
-            <p>Dept : </p>
-            <select name="dept" id="dept">
-                <option value="IT">IT</option>
-                <option value="HR">HR</option>
-                <option value="Finance">Finance</option>
-            </select>
-            <p>Salary : </p>
-            <input type="text" name="newemployeesalary" placeholder="Enter Salary" />
-        </div>
-        <div>
+
+            <div class="form-row">
+
+                <label for="name">Name :</label>
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter name"
+                >
+
+            </div>
+
+
+            <div class="form-row">
+
+                <label for="dept">Dept :</label>
+
+                <select id="dept">
+
+                    <option value="IT">IT</option>
+                    <option value="HR">HR</option>
+                    <option value="Finance">Finance</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <label for="salary">Salary :</label>
+
+                <input
+                    type="number"
+                    id="salary"
+                    placeholder="Enter salary"
+                >
+
+            </div>
+
+
+            <div class="button-container">
+
+                <button id="addEmployee">
+                    [+ Add Employee]
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Department Distribution -->
+        <section class="box department-box">
+
             <h4>Department Distribution</h4>
-            <ul>
-                <li>IT</li>
-                <li>HR</li>
-                <li>Finance</li>
+
+            <ul id="departmentList">
+
+                <li class="it">
+                    <span>IT :</span>
+                    <span id="itCount">1</span>
+                </li>
+
+                <li class="hr">
+                    <span>HR :</span>
+                    <span id="hrCount">1</span>
+                </li>
+
+                <li class="finance">
+                    <span>Finance :</span>
+                    <span id="financeCount">1</span>
+                </li>
+
             </ul>
-        </div>
-    </body>
+
+        </section>
+
+    </div>
+
+</body>
+
 </html>
