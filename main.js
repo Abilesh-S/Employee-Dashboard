@@ -1,24 +1,22 @@
-const readlineSync = require('readline-sync');
-
-const employees = [
-  { id: 1, name: "John", department: "IT", salary: 60000 },
-  { id: 2, name: "Sarah", department: "HR", salary: 50000 },
+let employees = [
+  { id: 1, name: "John", department: "IT", salary: 80000 },
+  { id: 2, name: "Sarah", department: "HR", salary: 60000 },
   { id: 3, name: "Mike", department: "Finance", salary: 70000 }
 ];
 
 function totalEmployee(){
-    console.log(employees.length);
+    document.getElementById("employeeCount").textContent = employees.length;
 }
 
 function salarybudget(){
     let totalSalary = employees.reduce((acc, curr) => acc + curr.salary, 0);
-    console.log(totalSalary);
+    document.getElementById("salaryBudget").textContent = `₹${totalSalary || 0}`;
 }
 
 function averageSalary(){
     let totalSalary = employees.reduce((acc, curr) => acc + curr.salary, 0);
     let average = totalSalary / employees.length;
-    console.log(average);
+    document.getElementById("averageSalary").textContent = `₹${parseInt(average) || 0}`
 }
 
 function searchEmployee(){
@@ -28,15 +26,44 @@ function searchEmployee(){
 }
 
 function employeeslist(){
-    console.log(employees);
+    let tableBody = document.getElementById("employeeTable");
+    tableBody.innerHTML = ""; // clear existing content first, so we don't duplicate rows on re-run
+
+    for (let user of employees) {
+        let row = `
+            <tr>
+                <td>${user.name}</td>
+                <td>${user.department}</td>
+                <td>₹${user.salary}</td>
+                <td><button class="delete-btn" data-id="${user.id}">Delete</button></td>
+            </tr>
+        `;
+        tableBody.innerHTML += row; // append this row's HTML to what's already there
+    }
 }
 
+
+let addBtn = document.getElementById("addEmployee");
+addBtn.addEventListener("click", () => {
+    addingEmployee();
+    employeeslist();
+    salarybudget();
+    averageSalary();
+    totalEmployee();
+    departmentDistribution();
+});
+
 function addingEmployee(){
-    let id = employees.length + 1;
-    let name = readlineSync.question("UserName");
-    let department = readlineSync.question("Department");
-    let salary = Number(readlineSync.question("salary"));
+    let name = document.getElementById("name").value;
+    let department = document.getElementById("dept").value;
+    let salary = Number(document.getElementById("salary").value);
+
+    let id = employees.length === 0 ? 1 : Math.max(...employees.map(emp => emp.id)) + 1;
+
     employees.push({ id, name, department, salary });
+
+    document.getElementById("name").value = "";
+    document.getElementById("salary").value = "";
 }
 
 function departmentDistribution(){
@@ -48,5 +75,33 @@ function departmentDistribution(){
         }
         return acc;
     }, {});
-    console.log(departmentList);
+    document.getElementById("itCount").textContent = departmentList.IT || 0;
+    document.getElementById("hrCount").textContent = departmentList.HR || 0;
+    document.getElementById("financeCount").textContent = departmentList.Finance || 0;
 }
+
+let tableBody = document.getElementById("employeeTable");
+
+tableBody.addEventListener("click", (event) => {
+    if (event.target.classList.contains("delete-btn")) {
+        let idToDelete = Number(event.target.dataset.id);
+        deleteEmployee(idToDelete);
+    }
+});
+
+function deleteEmployee(id){
+    employees = employees.filter(emp => emp.id !== id);
+
+    employeeslist();
+    salarybudget();
+    averageSalary();
+    totalEmployee();
+    departmentDistribution();
+}
+
+
+departmentDistribution();
+employeeslist();
+salarybudget()
+averageSalary();
+totalEmployee();
