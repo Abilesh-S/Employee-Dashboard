@@ -78,12 +78,16 @@ addBtn.addEventListener("click", () => {
 });
 
 function addingEmployee(){
-    let name = document.getElementById("name").value;
+    let name = document.getElementById("name").value.trim();
     let department = document.getElementById("dept").value;
     let salary = Number(document.getElementById("salary").value);
 
-    let id = employees.length === 0 ? 1 : Math.max(...employees.map(emp => emp.id)) + 1;
+    if (name === "" || salary <= 0 || isNaN(salary)) {
+        alert("Please enter a valid name and a positive salary.");
+        return; // stop here — don't add anything
+    }
 
+    let id = employees.length === 0 ? 1 : Math.max(...employees.map(emp => emp.id)) + 1;
     employees.push({ id, name, department, salary });
 
     document.getElementById("name").value = "";
