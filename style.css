@@ -369,3 +369,45 @@ td:first-child {
 .department-box .finance {
     border-left: 3px solid #11b981;
 }
+
+.search-box {
+    position: relative; /* anchor point for the dropdown below */
+}
+
+#searchResults {
+    list-style: none;
+    padding: 0;
+    margin: 4px 0 0 0;
+
+    position: absolute;   /* floats OVER the page instead of pushing content down */
+    top: 100%;              /* positions it right below the search box */
+    left: 16px;             /* aligns with the box's inner padding */
+    right: 16px;
+
+    background-color: white;  /* solid background so nothing bleeds through */
+    border: 1px solid #d9dde5;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* subtle shadow to visually "lift" it */
+
+    max-height: 180px;
+    overflow-y: auto;
+
+    z-index: 10; /* ensures it renders ABOVE other page elements */
+
+    display: none;
+}
+
+#searchResults li {
+    padding: 8px 11px;
+    font-size: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f2f5;
+}
+
+#searchResults li:last-child {
+    border-bottom: none;
+}
+
+#searchResults li:hover {
+    background-color: #f1f2f5;
+}

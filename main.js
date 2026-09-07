@@ -19,11 +19,35 @@ function averageSalary(){
     document.getElementById("averageSalary").textContent = `₹${parseInt(average) || 0}`
 }
 
-function searchEmployee(){
-    let userName = readlineSync.question("name: ");
-    let results = employees.filter(emp => emp.name.toLowerCase().includes(userName.toLowerCase()));
-    console.log(results);
-}
+let searchInput = document.getElementById("searchEmployee");
+let searchResults = document.getElementById("searchResults");
+
+searchInput.addEventListener("input", (event) => {
+    let query = event.target.value.trim().toLowerCase();
+
+    if (query === "") {
+        searchResults.innerHTML = "";
+        searchResults.style.display = "none";
+        return;
+    }
+
+    let matches = employees.filter(emp =>
+        emp.name.toLowerCase().includes(query) ||
+        emp.department.toLowerCase().includes(query)
+    );
+
+    if (matches.length === 0) {
+        searchResults.innerHTML = `<li>No results found</li>`;
+        searchResults.style.display = "block";
+        return;
+    }
+
+    searchResults.innerHTML = matches.map(emp =>
+        `<li>${emp.name} - ${emp.department}</li>`
+    ).join("");
+
+    searchResults.style.display = "block";
+});
 
 function employeeslist(){
     let tableBody = document.getElementById("employeeTable");
