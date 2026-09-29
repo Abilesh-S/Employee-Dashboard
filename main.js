@@ -1,9 +1,11 @@
 let employees = [];
 
+
+// fetches emp data and stores in the above employees
 async function employeesData(){
     document.getElementById("loadingOverlay").classList.add("active");
     try{
-        await new Promise(resolve => setTimeout(resolve, 5000)); // testing delay
+        await new Promise(resolve => setTimeout(resolve, 2000)); // testing delay
 
         let response = await fetch("http://localhost:8080/api/employees");
         if (!response.ok) {
@@ -23,6 +25,7 @@ async function employeesData(){
 }
 
 
+// first three small tabs of statistics board starts 
 function totalEmployee(){
     document.getElementById("employeeCount").textContent = employees.length;
 }
@@ -38,46 +41,46 @@ function averageSalary(){
     document.getElementById("averageSalary").textContent = `₹${parseInt(average) || 0}`
 }
 
-let searchInput = document.getElementById("searchEmployee");
-let searchResults = document.getElementById("searchResults");
+// Ends here
 
-searchInput.addEventListener("input", (event) => {
-    let query = event.target.value.trim().toLowerCase();
-
-    if (query === "") {
-        searchResults.innerHTML = "";
-        searchResults.style.display = "none";
-        return;
-    }
-
-    let matches = employees.filter(emp =>
-        emp.name.toLowerCase().includes(query) ||
-        emp.department.toLowerCase().includes(query)
-    );
-
-    if (matches.length === 0) {
-        searchResults.innerHTML = `<li>No results found</li>`;
-        searchResults.style.display = "block";
-        return;
-    }
-
-    searchResults.innerHTML = matches.map(emp =>
-        `<li>${emp.name} - ${emp.department}</li>`
-    ).join("");
-
-    searchResults.style.display = "block";
+// Search and employee list and filter operation mention here 
+document.getElementById("searchEmployee").addEventListener("input", () => {
+    employeeslist();
 });
+
+document.getElementById("departmentFilter").addEventListener("change", () => {
+    employeeslist();
+});
+
+document.getElementById("salarySort").addEventListener("change", () => {
+    employeeslist();
+});
+
 
 function employeeslist(){
     let tableBody = document.getElementById("employeeTable");
+    let deptFilterId = document.getElementById("departmentFilter").value;
+    let listSortOrder = document.getElementById("salarySort").value;
+    let query = document.getElementById("searchEmployee").value.trim().toLowerCase();
+
+
     tableBody.innerHTML = ""; // clear existing content first, so we don't duplicate rows on re-run
-    let sortedEmployeesBySalary = employees.sort((a, b )=> b.salary - a.salary);
-    for (let user of sortedEmployeesBySalary) {
+    let sortedEmpList = employees.filter(emp =>
+        (deptFilterId === "All" || emp.department === deptFilterId ) && 
+        (emp.name.toLowerCase().includes(query) || emp.department.toLowerCase().includes(query))       
+    );
+    if(listSortOrder === "high-low"){
+        sortedEmpList = sortedEmpList.sort((a , b ) => b.salary - a.salary);
+    }
+    else{
+        sortedEmpList = sortedEmpList.sort((a , b ) => a.salary - b.salary);
+    }
+    for (let user of sortedEmpList) {
         let row = `
             <tr>
                 <td>${user.name}</td>
                 <td>${user.department}</td>
-                <td>₹${user.salary}</td>
+                <td>₹${user.salary.toLocaleString("en-IN")}</td>
                 <td><button class="delete-btn" data-id="${user.id}">Delete</button></td>
             </tr>
         `;
@@ -86,8 +89,10 @@ function employeeslist(){
 }
 
 
-let addBtn = document.getElementById("addEmployee");
-addBtn.addEventListener("click", () => {
+// Adding Employee in the list
+let addForm = document.getElementById("addEmployeeForm");
+addForm.addEventListener("submit", (event) => {
+    event.preventDefault();
     addingEmployee();
     employeeslist();
     salarybudget();
@@ -113,6 +118,8 @@ function addingEmployee(){
     document.getElementById("salary").value = "";
 }
 
+
+// Department Wise Distribution of List
 function departmentDistribution(){
     let departmentList = employees.reduce((acc, curr) => {
         if (acc[curr.department]) {
@@ -127,6 +134,7 @@ function departmentDistribution(){
     document.getElementById("financeCount").textContent = departmentList.Finance || 0;
 }
 
+// Employee Table List for Deletion 
 let tableBody = document.getElementById("employeeTable");
 
 tableBody.addEventListener("click", (event) => {
@@ -147,6 +155,7 @@ function deleteEmployee(id){
 }
 
 
+// Starting load in the dashboard for initialization
 async function loadEmployees(){
     employees = await employeesData();
     departmentDistribution();
@@ -158,6 +167,7 @@ async function loadEmployees(){
 
 let refreshBtn = document.getElementById("refreshEmployees");
 refreshBtn.addEventListener("click", () => {
+    document.getElementById("statusMessage").textContent = "";
     loadEmployees();
 });
 

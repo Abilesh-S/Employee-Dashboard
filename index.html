@@ -21,7 +21,9 @@
             <button id="refreshEmployees" class="refresh-btn" title="Refresh Employees">🔄</button>
         </header>
 
-        <!-- Status message (loading / error) -->
+        <!-- A. NEW: Status message (error / info) -->
+        <p id="statusMessage" class="status-message"></p>
+
         <!-- Loading Overlay -->
         <div id="loadingOverlay" class="loading-overlay">
             <div class="loading-box">
@@ -56,7 +58,6 @@
         <section class="box search-box">
             <h4>Search Employee 🔍</h4>
             <input type="text" id="searchEmployee" placeholder="Search by name or department...">
-            <ul id="searchResults"></ul>
         </section>
 
 
@@ -64,6 +65,23 @@
         <section class="box">
 
             <h4>Employee List</h4>
+
+            <!-- B. NEW: Department filter + Salary sort -->
+            <div class="list-controls">
+
+                <select id="departmentFilter">
+                    <option value="All">All</option>
+                    <option value="IT">IT</option>
+                    <option value="HR">HR</option>
+                    <option value="Finance">Finance</option>
+                </select>
+
+                <select id="salarySort">
+                    <option value="high-low">Salary: High to Low</option>
+                    <option value="low-high">Salary: Low to High</option>
+                </select>
+
+            </div>
 
             <table>
 
@@ -78,8 +96,6 @@
 
                 <tbody id="employeeTable">
 
-                    
-
                 </tbody>
 
             </table>
@@ -92,54 +108,36 @@
 
             <h4>Add Employee</h4>
 
-            <div class="form-row">
+            <!-- C. NEW: form wrapper, so the submit event works -->
+            <form id="addEmployeeForm">
 
-                <label for="name">Name :</label>
+                <div class="form-row">
+                    <label for="name">Name :</label>
+                    <input type="text" id="name" placeholder="Enter name">
+                </div>
 
-                <input
-                    type="text"
-                    id="name"
-                    placeholder="Enter name"
-                >
+                <div class="form-row">
+                    <label for="dept">Dept :</label>
+                    <select id="dept">
+                        <option value="IT">IT</option>
+                        <option value="HR">HR</option>
+                        <option value="Finance">Finance</option>
+                    </select>
+                </div>
 
-            </div>
+                <div class="form-row">
+                    <label for="salary">Salary :</label>
+                    <input type="number" id="salary" placeholder="Enter salary">
+                </div>
 
+                <div class="button-container">
+                    <!-- type="submit" instead of a plain button -->
+                    <button type="submit" id="addEmployee">
+                        [+ Add Employee]
+                    </button>
+                </div>
 
-            <div class="form-row">
-
-                <label for="dept">Dept :</label>
-
-                <select id="dept">
-
-                    <option value="IT">IT</option>
-                    <option value="HR">HR</option>
-                    <option value="Finance">Finance</option>
-
-                </select>
-
-            </div>
-
-
-            <div class="form-row">
-
-                <label for="salary">Salary :</label>
-
-                <input
-                    type="number"
-                    id="salary"
-                    placeholder="Enter salary"
-                >
-
-            </div>
-
-
-            <div class="button-container">
-
-                <button id="addEmployee">
-                    [+ Add Employee]
-                </button>
-
-            </div>
+            </form>
 
         </section>
 
