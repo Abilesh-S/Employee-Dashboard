@@ -1,8 +1,27 @@
-let employees = [
-  { id: 1, name: "John", department: "IT", salary: 80000 },
-  { id: 2, name: "Sarah", department: "HR", salary: 60000 },
-  { id: 3, name: "Mike", department: "Finance", salary: 70000 }
-];
+let employees = [];
+
+async function employeesData(){
+    document.getElementById("loadingOverlay").classList.add("active");
+    try{
+        await new Promise(resolve => setTimeout(resolve, 5000)); // testing delay
+
+        let response = await fetch("http://localhost:8080/api/employees");
+        if (!response.ok) {
+            throw new Error("Failed to fetch");
+        }
+        let data = await response.json();
+        return data;
+    }
+    catch(error){
+        console.log("Error : ", error);
+        document.getElementById("statusMessage").textContent = "Unable to load employees. Please try again.";
+        return [];
+    }
+    finally {
+        document.getElementById("loadingOverlay").classList.remove("active");
+    }
+}
+
 
 function totalEmployee(){
     document.getElementById("employeeCount").textContent = employees.length;
@@ -52,8 +71,8 @@ searchInput.addEventListener("input", (event) => {
 function employeeslist(){
     let tableBody = document.getElementById("employeeTable");
     tableBody.innerHTML = ""; // clear existing content first, so we don't duplicate rows on re-run
-
-    for (let user of employees) {
+    let sortedEmployeesBySalary = employees.sort((a, b )=> b.salary - a.salary);
+    for (let user of sortedEmployeesBySalary) {
         let row = `
             <tr>
                 <td>${user.name}</td>
@@ -128,8 +147,22 @@ function deleteEmployee(id){
 }
 
 
-departmentDistribution();
-employeeslist();
-salarybudget()
-averageSalary();
-totalEmployee();
+async function loadEmployees(){
+    employees = await employeesData();
+    departmentDistribution();
+    employeeslist();
+    salarybudget();
+    averageSalary();
+    totalEmployee();
+}
+
+let refreshBtn = document.getElementById("refreshEmployees");
+refreshBtn.addEventListener("click", () => {
+    loadEmployees();
+});
+
+function init(){
+    loadEmployees();
+}
+
+init();

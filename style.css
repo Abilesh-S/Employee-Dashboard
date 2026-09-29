@@ -411,3 +411,77 @@ td:first-child {
 #searchResults li:hover {
     background-color: #f1f2f5;
 }
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.4);
+
+    display: none; /* hidden by default */
+    align-items: center;
+    justify-content: center;
+
+    z-index: 999;
+}
+
+.loading-overlay.active {
+    display: flex; /* shown when this class is added */
+}
+
+.loading-box {
+    background-color: white;
+    padding: 24px 32px;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.loading-box p {
+    margin: 0;
+    font-size: 13px;
+    color: #45546c;
+}
+
+.spinner {
+    width: 32px;
+    height: 32px;
+
+    border: 4px solid #e0e0e0;
+    border-top: 4px solid #5340e7;
+    border-radius: 50%;
+
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.refresh-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 16px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.refresh-btn:hover {
+    background-color: rgba(255, 255, 255, 0.35);
+    transform: rotate(90deg);
+}

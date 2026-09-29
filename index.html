@@ -18,9 +18,17 @@
         <!-- Header -->
         <header class="header">
             <h2>Employee Dashboard</h2>
-
-            
+            <button id="refreshEmployees" class="refresh-btn" title="Refresh Employees">🔄</button>
         </header>
+
+        <!-- Status message (loading / error) -->
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay">
+            <div class="loading-box">
+                <div class="spinner"></div>
+                <p>Loading employees...</p>
+            </div>
+        </div>
 
 
         <!-- Dashboard Cards -->
