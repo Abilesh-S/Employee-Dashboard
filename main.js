@@ -1,4 +1,37 @@
 let employees = [];
+const newId = generateEmployeeId();
+
+
+function generateEmployeeId() { 
+  let count = 3; 
+ 
+  return function() { 
+    return ++count;
+  }; 
+}
+
+function processEmployee(employee , callback){
+    return callback(employee);
+}
+
+function salaryFormat(user){
+    return "₹"+user.salary.toLocaleString("en-IN");
+}
+
+function resultformat(user){
+    return `
+        <tr>
+            <td>${user.name}</td>
+            <td>${user.department}</td>
+            <td>${processEmployee(user , salaryFormat)}</td>
+            <td><button class="delete-btn" data-id="${user.id}">Delete</button></td>
+        </tr>`
+}
+
+
+function employeeSummary(user){
+    return `${user.name} | ${user.department} | ₹${user.salary.toLocaleString("en-IN")}`;
+}
 
 
 // fetches emp data and stores in the above employees
@@ -76,17 +109,13 @@ function employeeslist(){
         sortedEmpList = sortedEmpList.sort((a , b ) => a.salary - b.salary);
     }
     for (let user of sortedEmpList) {
-        let row = `
-            <tr>
-                <td>${user.name}</td>
-                <td>${user.department}</td>
-                <td>₹${user.salary.toLocaleString("en-IN")}</td>
-                <td><button class="delete-btn" data-id="${user.id}">Delete</button></td>
-            </tr>
-        `;
+        let row = processEmployee(user , resultformat);
         tableBody.innerHTML += row; // append this row's HTML to what's already there
+        console.log(processEmployee(user, employeeSummary));
     }
 }
+
+
 
 
 // Adding Employee in the list
@@ -111,8 +140,9 @@ function addingEmployee(){
         return; // stop here — don't add anything
     }
 
-    let id = employees.length === 0 ? 1 : Math.max(...employees.map(emp => emp.id)) + 1;
+    let id = newId();
     employees.push({ id, name, department, salary });
+    console.log(JSON.stringify(employees[employees.length-1]));
 
     document.getElementById("name").value = "";
     document.getElementById("salary").value = "";
