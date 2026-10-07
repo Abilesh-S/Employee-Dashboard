@@ -1,13 +1,12 @@
 let employees = [];
-const newId = generateEmployeeId();
-
+let newId ; 
 
 function generateEmployeeId() { 
-  let count = 3; 
- 
-  return function() { 
-    return ++count;
-  }; 
+    let highestId = employees.slice().sort((a , b)=> b.id - a.id)[0];
+    let count = highestId ? highestId.id : 0;
+    return function() { 
+        return ++count;
+    }; 
 }
 
 function processEmployee(employee , callback){
@@ -89,12 +88,17 @@ document.getElementById("salarySort").addEventListener("change", () => {
     employeeslist();
 });
 
+document.getElementById("nameSort").addEventListener("change" , () =>{
+    employeeslist();
+});
+
 
 function employeeslist(){
     let tableBody = document.getElementById("employeeTable");
     let deptFilterId = document.getElementById("departmentFilter").value;
     let listSortOrder = document.getElementById("salarySort").value;
     let query = document.getElementById("searchEmployee").value.trim().toLowerCase();
+    let nameOrder = document.getElementById("nameSort").value;
 
 
     tableBody.innerHTML = ""; // clear existing content first, so we don't duplicate rows on re-run
@@ -102,17 +106,27 @@ function employeeslist(){
         (deptFilterId === "All" || emp.department === deptFilterId ) && 
         (emp.name.toLowerCase().includes(query) || emp.department.toLowerCase().includes(query))       
     );
+
+    if(nameOrder === "name-asc"){
+        sortedEmpList = sortedEmpList.sort((a , b) => a.name.localeCompare(b.name));
+    }
+    else if(nameOrder ==="name-des"){
+        sortedEmpList = sortedEmpList.sort((a , b) => b.name.localeCompare(a.name));
+    }
+
     if(listSortOrder === "high-low"){
         sortedEmpList = sortedEmpList.sort((a , b ) => b.salary - a.salary);
     }
-    else{
+    else if(listSortOrder === "low-high"){
         sortedEmpList = sortedEmpList.sort((a , b ) => a.salary - b.salary);
     }
+
     for (let user of sortedEmpList) {
         let row = processEmployee(user , resultformat);
         tableBody.innerHTML += row; // append this row's HTML to what's already there
-        console.log(processEmployee(user, employeeSummary));
+        console.log(processEmployee(user , employeeSummary))
     }
+    console.log(employees);
 }
 
 
@@ -135,10 +149,21 @@ function addingEmployee(){
     let department = document.getElementById("dept").value;
     let salary = Number(document.getElementById("salary").value);
 
-    if (name === "" || salary <= 0 || isNaN(salary)) {
-        alert("Please enter a valid name and a positive salary.");
+    if (name === "" ) {
+        alert("Please enter a valid name ");
         return; // stop here — don't add anything
     }
+
+    if(salary <= 0 || isNaN(salary)){
+        alert("Please Enter a positive salary");
+        return;
+    }
+
+    if(dept === "None" || dept === ""){
+        alert("Choose a dept");
+        return;
+    }
+
 
     let id = newId();
     employees.push({ id, name, department, salary });
@@ -188,6 +213,7 @@ function deleteEmployee(id){
 // Starting load in the dashboard for initialization
 async function loadEmployees(){
     employees = await employeesData();
+    newId = generateEmployeeId();
     departmentDistribution();
     employeeslist();
     salarybudget();
